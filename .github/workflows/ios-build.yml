@@ -1,0 +1,111 @@
+# Compila las partes iOS de la práctica en un runner macOS de GitHub.
+# Sirve para detectar errores de compilación ANTES de la sesión en la VM
+# (el equipo no tiene Mac). No sustituye las capturas del simulador.
+#
+# Se ejecuta a mano desde la pestaña Actions ("Run workflow") o en cada push
+# a main. Los .app del simulador quedan como artefactos descargables.
+name: Compilación iOS
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  swift:
+    name: Swift (Ej1, Ej2, Ej3)
+    runs-on: macos-14
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - dir: ej1-entorno/HolaMundo
+            scheme: HolaMundo
+          - dir: ej2-gestor-ios
+            scheme: GestorArchivos
+          - dir: ej3-camara-ios
+            scheme: CamaraMic
+    steps:
+      - uses: actions/checkout@v4
+      - name: Usar Xcode 15.2 (el máximo en macOS Ventura, igual que la VM) si existe
+        run: |
+          if [ -d /Applications/Xcode_15.2.app ]; then sudo xcode-select -s /Applications/Xcode_15.2.app; fi
+          xcodebuild -version
+      - name: Instalar XcodeGen
+        run: brew install xcodegen
+      - name: Generar proyecto
+        working-directory: ${{ matrix.dir }}
+        run: xcodegen generate
+      - name: Compilar para el simulador (x86_64 + arm64)
+        working-directory: ${{ matrix.dir }}
+        run: |
+          xcodebuild -scheme ${{ matrix.scheme }} \
+            -sdk iphonesimulator -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build \
+            ARCHS="x86_64 arm64" ONLY_ACTIVE_ARCH=NO \
+            CODE_SIGNING_ALLOWED=NO build
+      - name: Empaquetar .app
+        working-directory: ${{ matrix.dir }}/build/Build/Products/Debug-iphonesimulator
+        run: zip -qr "$GITHUB_WORKSPACE/${{ matrix.scheme }}-simulador.zip" ${{ matrix.scheme }}.app
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.scheme }}-simulador
+          path: ${{ matrix.scheme }}-simulador.zip
+
+  flutter:
+    name: Flutter iOS (Ej4)
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Usar Xcode 15.2 (el máximo en macOS Ventura, igual que la VM) si existe
+        run: |
+          if [ -d /Applications/Xcode_15.2.app ]; then sudo xcode-select -s /Applications/Xcode_15.2.app; fi
+          xcodebuild -version
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.24.0
+          channel: stable
+      - name: Pruebas
+        working-directory: ej4-flutter-camara
+        run: flutter test
+      - name: Compilar para el simulador
+        working-directory: ej4-flutter-camara
+        run: flutter build ios --simulator --debug
+      - name: Empaquetar .app
+        working-directory: ej4-flutter-camara/build/ios/iphonesimulator
+        run: zip -qr "$GITHUB_WORKSPACE/FlutterCamara-simulador.zip" Runner.app
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FlutterCamara-simulador
+          path: FlutterCamara-simulador.zip
+
+  kmp:
+    name: Kotlin Multiplatform iOS (Ej5)
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Usar Xcode 15.2 (el máximo en macOS Ventura, igual que la VM) si existe
+        run: |
+          if [ -d /Applications/Xcode_15.2.app ]; then sudo xcode-select -s /Applications/Xcode_15.2.app; fi
+          xcodebuild -version
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Pruebas de commonMain (JVM)
+        working-directory: ej5-kmp-gestor
+        run: ./gradlew :composeApp:testDebugUnitTest
+      - name: Compilar iosMain (Kotlin/Native)
+        working-directory: ej5-kmp-gestor
+        run: ./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64 :composeApp:linkDebugFrameworkIosX64
+      - name: Instalar XcodeGen
+        run: brew install xcodegen
+      - name: Compilar la app iOS
+        working-directory: ej5-kmp-gestor/iosApp
+        run: |
+          xcodegen generate
+          xcodebuild -scheme iosApp -sdk iphonesimulator -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build ARCHS=arm64 ONLY_ACTIVE_ARCH=NO \
+            CODE_SIGNING_ALLOWED=NO build
