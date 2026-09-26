@@ -1,0 +1,39 @@
+# --- Archivos personales / de referencia (no forman parte de la entrega) ---
+AppMovilesPractica3*.pdf
+*.pdf
+!ej*/**/*.pdf
+LECCIONES_APRENDIDAS.md
+CONTEXTO*.md
+notas/
+.env
+
+# --- Sistema / editores ---
+.DS_Store
+.idea/
+.vscode/
+*.iml
+*.swp
+
+# --- Xcode (los .xcodeproj de Ej1, Ej2, Ej3 y Ej5 se generan con XcodeGen) ---
+ej1-entorno/HolaMundo/*.xcodeproj/
+ej1-entorno/HolaMundo/HolaMundo/Info.plist
+ej2-gestor-ios/*.xcodeproj/
+ej2-gestor-ios/GestorArchivos/Info.plist
+ej3-camara-ios/*.xcodeproj/
+ej3-camara-ios/CamaraMic/Info.plist
+ej5-kmp-gestor/iosApp/*.xcodeproj/
+ej5-kmp-gestor/iosApp/iosApp/Info.plist
+DerivedData/
+build/
+xcuserdata/
+*.xcuserstate
+
+# --- Gradle / Kotlin ---
+.gradle/
+.kotlin/
+local.properties
+captures/
+
+# --- Flutter (además del .gitignore propio de ej4) ---
+.dart_tool/
+Pods/
