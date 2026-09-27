@@ -1,0 +1,46 @@
+# Proyecto Xcode del Ejercicio 2 (Gestor de Archivos). Se genera con XcodeGen:
+#   brew install xcodegen && xcodegen generate && open GestorArchivos.xcodeproj
+name: GestorArchivos
+options:
+  bundleIdPrefix: mx.ipn.escom.p3
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: ""
+targets:
+  GestorArchivos:
+    type: application
+    platform: iOS
+    sources:
+      - path: GestorArchivos
+    info:
+      path: GestorArchivos/Info.plist
+      properties:
+        CFBundleDisplayName: Gestor P3
+        CFBundleDevelopmentRegion: es-MX
+        UILaunchScreen: {}
+        # Expone Documents en la app Archivos y permite abrir documentos en sitio.
+        UIFileSharingEnabled: true
+        LSSupportsOpeningDocumentsInPlace: true
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: mx.ipn.escom.p3.gestorarchivos
+        TARGETED_DEVICE_FAMILY: "1,2"
+        # Opcional (valor agregado): versión para macOS con Mac Catalyst.
+        SUPPORTS_MACCATALYST: YES
+        DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER: YES
