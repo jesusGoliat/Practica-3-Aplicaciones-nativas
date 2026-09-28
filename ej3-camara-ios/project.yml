@@ -1,0 +1,44 @@
+# Proyecto Xcode del Ejercicio 3 (Cámara y Micrófono). Se genera con XcodeGen:
+#   brew install xcodegen && xcodegen generate && open CamaraMic.xcodeproj
+name: CamaraMic
+options:
+  bundleIdPrefix: mx.ipn.escom.p3
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    CODE_SIGN_STYLE: Automatic
+    # Vacío para el simulador. En un iPhone real: elegir el "Personal Team".
+    DEVELOPMENT_TEAM: ""
+targets:
+  CamaraMic:
+    type: application
+    platform: iOS
+    sources:
+      - path: CamaraMic
+    info:
+      path: CamaraMic/Info.plist
+      properties:
+        CFBundleDisplayName: Cámara P3
+        CFBundleDevelopmentRegion: es-MX
+        UILaunchScreen: {}
+        # Descripciones que iOS muestra al pedir cada permiso.
+        NSCameraUsageDescription: La cámara se usa para tomar fotos que se guardan solo en este dispositivo.
+        NSMicrophoneUsageDescription: El micrófono se usa para grabar notas de voz que se guardan solo en este dispositivo.
+        NSPhotoLibraryUsageDescription: Se accede a la fototeca para importar imágenes cuando no hay cámara disponible (por ejemplo, en el simulador).
+        NSLocationWhenInUseUsageDescription: La ubicación se guarda como metadato de cada foto o grabación (opcional).
+        # Permite ver y exportar las capturas desde la app Archivos.
+        UIFileSharingEnabled: true
+        LSSupportsOpeningDocumentsInPlace: true
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: mx.ipn.escom.p3.camaramic
+        TARGETED_DEVICE_FAMILY: "1,2"
