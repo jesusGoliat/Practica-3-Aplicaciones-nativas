@@ -386,14 +386,13 @@ La estructura, la tabla de `expect`/`actual` y las librerías están en
 | Aplicación | Dónde | Qué se probó | Resultado |
 |---|---|---|---|
 | Ej. 4 Flutter | Linux (`flutter test`) | 6 pruebas de repositorio + 4 de interfaz | ✅ 10/10 |
-| Ej. 4 Flutter | Emulador Android API 33 (release) | Arranque, solicitud de permiso de cámara | ✅ |
-| Ej. 4 Flutter | Celular Android «modelo» | Cámara real, filtros, flash, grabación, galería | «✅/❌» |
+| Ej. 4 Flutter | Celular Xiaomi 25062PC34G, Android 16 (APK release) | Permisos de cámara y micrófono; foto real con filtros Original, Sepia y Grises guardada en la galería; grabación real de 32 s con medidor de nivel; galería con miniaturas; álbum «Escuela» y etiquetas; editor (giro + filtro) aplicado al archivo; reproductor; temas Guinda/Azul en claro y oscuro | ✅ |
 | Ej. 4 Flutter | Simulador iPhone 15 (iOS 17.2) | Fototeca, grabadora, galería, temas | «✅/❌» |
 | Ej. 5 KMP | Linux (JVM) | 9 pruebas de dominio + 4 de SQLDelight | ✅ 13/13 |
-| Ej. 5 KMP | Emulador Android API 33 (release, R8) | Arranque, archivos de ejemplo, navegación, migas | ✅ |
+| Ej. 5 KMP | Celular Xiaomi 25062PC34G, Android 16 (APK release, R8) | Archivos de ejemplo, navegación con migas, menú contextual, visores de texto e imagen, favoritos y recientes (SQLDelight), restauración de la última carpeta, temas Guinda/Azul con el modo oscuro del sistema | ✅ |
 | Ej. 5 KMP | Simulador iPhone 15 | Explorador, visores, importar, compartir, favoritos | «✅/❌» |
 | Ej. 2 y 3 | Docker `swift:5.10` (`swiftc -parse`) | Sintaxis de todos los archivos Swift | ✅ |
-| Ej. 1–5 iOS | GitHub Actions `macos-14` | Compilación para el simulador | «✅/❌ + enlace a la ejecución» |
+| Ej. 1–5 iOS | GitHub Actions `macos-14`, Xcode 15.2 | Compilación para el simulador de los 5 proyectos + pruebas de Flutter y KMP ([ejecución](https://github.com/jesusGoliat/Practica-3-Aplicaciones-nativas/actions/runs/36495483496)) | ✅ |
 | Ej. 2 | Simulador iPhone 15 | Ver lista de capturas | «✅/❌» |
 | Ej. 3 | Simulador iPhone 15 | PHPicker, filtros, grabación, Core Data | «✅/❌» |
 | Todas | Modo avión / sin red | Funcionan sin Internet | «✅» |
@@ -405,8 +404,22 @@ La estructura, la tabla de `expect`/`actual` y las librerías están en
   grabó audio real.
 - **Cámara en iOS:** no se probó en un iPhone físico (nadie tiene uno). Se
   usó la fuente alternativa que acepta la práctica.
-- «Agregar aquí cualquier bug encontrado durante las capturas (qué pasa,
-  cuándo y cómo evitarlo), en lugar de corregirlo a última hora.»
+- **Editor de Flutter (corregido):** al girar una foto vertical, la vista
+  previa se salía por los lados de la pantalla, porque `AnimatedRotation` no
+  vuelve a medir la imagen. Se detectó en el celular **antes** de tomar la
+  captura del editor y se cambió por `RotatedBox` (commit `fix(ej4)`). Las
+  capturas corresponden al código corregido.
+- **No probado en el celular:** en el Ej. 4, flash, temporizador de foto,
+  cambio de cámara, importar y compartir. En el Ej. 5, renombrar, copiar,
+  mover, eliminar, completar una importación y compartir. La lógica de estas
+  operaciones está cubierta por las pruebas automáticas (repositorio y
+  dominio), pero no se ejecutó a mano.
+- **Zoom en el visor de imagen del Ej. 5:** el gesto de pellizcar no se puede
+  automatizar con `adb`, así que la captura muestra la imagen a tamaño
+  normal.
+- **Importar en el Ej. 5:** la captura muestra el menú «Importar archivos» y
+  no el selector del sistema, porque este mostraba fotos personales del
+  teléfono de un integrante.
 
 ---
 
