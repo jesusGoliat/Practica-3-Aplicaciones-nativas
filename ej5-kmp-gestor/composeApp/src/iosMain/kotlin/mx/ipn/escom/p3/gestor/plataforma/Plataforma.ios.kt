@@ -45,6 +45,7 @@ import platform.UIKit.UIDevice
 import platform.UIKit.UIDocumentPickerDelegateProtocol
 import platform.UIKit.UIDocumentPickerViewController
 import platform.UIKit.UIViewController
+import platform.UIKit.popoverPresentationController
 import platform.UniformTypeIdentifiers.UTTypeItem
 import platform.darwin.NSObject
 import platform.posix.memcpy
