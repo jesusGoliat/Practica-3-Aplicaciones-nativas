@@ -152,10 +152,14 @@ class _EditorFotoState extends State<_EditorFoto> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16),
-              child: AnimatedRotation(
-                turns: _cuartos / 4,
-                duration: const Duration(milliseconds: 250),
-                child: imagen,
+              // RotatedBox vuelve a medir la imagen al girarla, así una foto
+              // vertical girada 90° cabe completa en pantalla (AnimatedRotation
+              // solo la dibujaba girada y se salía por los lados).
+              child: Center(
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 250),
+                  child: RotatedBox(key: ValueKey(_cuartos % 4), quarterTurns: _cuartos % 4, child: imagen),
+                ),
               ),
             ),
           ),
