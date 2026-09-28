@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Album" representedClassName="Album" syncable="YES" codeGenerationType="class">
+        <attribute name="fecha" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="nombre" attributeType="String"/>
+        <relationship name="capturas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Captura" inverseName="album" inverseEntity="Captura"/>
+    </entity>
+    <entity name="Captura" representedClassName="Captura" syncable="YES" codeGenerationType="class">
+        <attribute name="archivo" attributeType="String"/>
+        <attribute name="duracion" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="etiquetas" attributeType="String" defaultValueString=""/>
+        <attribute name="fecha" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="filtro" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="latitud" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
+        <attribute name="longitud" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
+        <attribute name="miniatura" optional="YES" attributeType="String"/>
+        <attribute name="tipo" attributeType="String"/>
+        <relationship name="album" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Album" inverseName="capturas" inverseEntity="Album"/>
+    </entity>
+</model>
