@@ -1,0 +1,54 @@
+# Proyecto Xcode del lado iOS del Ejercicio 5. Se genera con XcodeGen:
+#   brew install xcodegen && cd iosApp && xcodegen generate
+name: iosApp
+options:
+  bundleIdPrefix: mx.ipn.escom.p3
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    # Firma: vacío para el simulador. Para un iPhone real, elegir el Team en Xcode.
+    CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: ""
+targets:
+  iosApp:
+    type: application
+    platform: iOS
+    sources:
+      - path: iosApp
+    info:
+      path: iosApp/Info.plist
+      properties:
+        CFBundleDisplayName: Gestor KMP
+        CFBundleDevelopmentRegion: es-MX
+        UILaunchScreen: {}
+        # Compose Multiplatform necesita esta clave para animaciones fluidas.
+        CADisableMinimumFrameDurationOnPhone: true
+        # Expone Documents en la app Archivos de iOS.
+        UIFileSharingEnabled: true
+        LSSupportsOpeningDocumentsInPlace: true
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: mx.ipn.escom.p3.gestorkmp
+        ENABLE_USER_SCRIPT_SANDBOXING: NO
+        # El framework ComposeApp lo genera Gradle en esta ruta.
+        FRAMEWORK_SEARCH_PATHS: "$(inherited) $(SRCROOT)/../composeApp/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)"
+        OTHER_LDFLAGS: "$(inherited) -framework ComposeApp -lsqlite3"
+    preBuildScripts:
+      - name: Compilar Kotlin (ComposeApp)
+        basedOnDependencyAnalysis: false
+        script: |
+          # Xcode no carga el perfil de la terminal: se busca el JDK 17 aquí.
+          if [ -z "$JAVA_HOME" ]; then
+            export JAVA_HOME="$(/usr/libexec/java_home -v 17 2>/dev/null || /usr/libexec/java_home)"
+          fi
+          cd "$SRCROOT/.."
+          ./gradlew :composeApp:embedAndSignAppleFrameworkForXcode
