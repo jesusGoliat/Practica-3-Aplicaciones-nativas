@@ -89,8 +89,19 @@ que es lenta, el código se escribió y se validó antes en Linux:
 
 ### 1.1 Identificación del equipo
 La comparativa completa está en [`ej1-entorno/comparativa-pcs.md`](ej1-entorno/comparativa-pcs.md).
-**Equipo elegido:** PC de David Alexis Hernandez Gonzalez (2024630227): «CPU», «RAM», «disco».
-Se eligió porque «justificación». Ningún integrante tiene una Mac física.
+**Equipo elegido:** PC de David Alexis Hernandez Gonzalez (2024630227):
+Windows 11 Pro 25H2 (64 bits), Intel Core i5-10600KF a 4.10 GHz (6 núcleos /
+12 hilos, virtualización VT-x habilitada), 16 GB de RAM, NVIDIA GeForce RTX
+3060 (12 GB) y 1.17 TB de disco libre.
+
+Se eligió porque cumple los requisitos del repositorio MacOS-Docker: 16 GB de
+RAM, CPU con virtualización y espacio de sobra para macOS, Xcode y los
+simuladores (se recomiendan ≥ 50 GB). Por su número de núcleos es la más
+adecuada para virtualizar macOS con QEMU/KVM. La PC de Jesús (i5-6200U,
+7.6 GB de RAM, 32 GB libres) queda por debajo del mínimo. Como el anfitrión es
+Windows, macOS se ejecuta con Docker Desktop sobre WSL2 con virtualización
+anidada. Ningún integrante tiene una Mac física, así que no fue necesario
+avisar al docente ni unirse con otro equipo.
 
 ### 1.2 Trabajo en equipo
 La bitácora de sesiones está en [`ej1-entorno/bitacora.md`](ej1-entorno/bitacora.md).
