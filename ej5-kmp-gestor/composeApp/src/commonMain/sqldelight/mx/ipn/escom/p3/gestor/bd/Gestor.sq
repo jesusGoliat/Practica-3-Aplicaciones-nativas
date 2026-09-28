@@ -1,0 +1,55 @@
+-- Persistencia local del gestor (SQLDelight): favoritos, recientes y
+-- preferencias de la sesión. Los archivos en sí viven en el sistema de
+-- archivos del dispositivo.
+
+CREATE TABLE favorito (
+    ruta TEXT NOT NULL PRIMARY KEY,
+    nombre TEXT NOT NULL,
+    es_carpeta INTEGER NOT NULL DEFAULT 0,
+    agregado INTEGER NOT NULL
+);
+
+CREATE TABLE reciente (
+    ruta TEXT NOT NULL PRIMARY KEY,
+    nombre TEXT NOT NULL,
+    abierto INTEGER NOT NULL
+);
+
+CREATE TABLE preferencia (
+    clave TEXT NOT NULL PRIMARY KEY,
+    valor TEXT NOT NULL
+);
+
+favoritos:
+SELECT * FROM favorito ORDER BY nombre COLLATE NOCASE;
+
+agregarFavorito:
+INSERT OR REPLACE INTO favorito(ruta, nombre, es_carpeta, agregado) VALUES (?, ?, ?, ?);
+
+quitarFavorito:
+DELETE FROM favorito WHERE ruta = ?;
+
+recientes:
+SELECT * FROM reciente ORDER BY abierto DESC LIMIT 20;
+
+registrarReciente:
+INSERT OR REPLACE INTO reciente(ruta, nombre, abierto) VALUES (?, ?, ?);
+
+quitarReciente:
+DELETE FROM reciente WHERE ruta = ?;
+
+limpiarRecientes:
+DELETE FROM reciente;
+
+-- Cuando se renombra o mueve un archivo, se actualizan sus referencias.
+moverFavorito:
+UPDATE favorito SET ruta = :nueva, nombre = :nombre WHERE ruta = :anterior;
+
+moverReciente:
+UPDATE reciente SET ruta = :nueva, nombre = :nombre WHERE ruta = :anterior;
+
+preferencia:
+SELECT valor FROM preferencia WHERE clave = ?;
+
+guardarPreferencia:
+INSERT OR REPLACE INTO preferencia(clave, valor) VALUES (?, ?);
