@@ -1,0 +1,29 @@
+# Proyecto de prueba del Ejercicio 1 (verifica Xcode + simulador).
+#   brew install xcodegen && xcodegen generate && open HolaMundo.xcodeproj
+name: HolaMundo
+options:
+  bundleIdPrefix: mx.ipn.escom.p3
+  deploymentTarget:
+    iOS: "16.0"
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: ""
+targets:
+  HolaMundo:
+    type: application
+    platform: iOS
+    sources:
+      - path: HolaMundo
+    info:
+      path: HolaMundo/Info.plist
+      properties:
+        CFBundleDisplayName: Hola ESCOM
+        UILaunchScreen: {}
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: mx.ipn.escom.p3.holamundo
+        TARGETED_DEVICE_FAMILY: "1,2"
