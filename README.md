@@ -481,9 +481,10 @@ Jetpack Compose en la forma de pensar la interfaz de forma declarativa, aunque
 el manejo de permisos, los security-scoped bookmarks y el sandboxing de iOS
 son bastante más estrictos que lo que había visto en Android.
 
-
 ### Luis Angel Agustin Fuentes
-«…»
+Antes de esta práctica, mi experiencia estaba enfocada casi por completo en Android y desarrollo Web, por lo que el ecosistema Apple era un terreno prácticamente nuevo para mí. Enfrentarme a él me hizo entender de primera mano la complejidad de sus restricciones, donde me sorprendió especialmente la rigidez de su sistema de seguridad y el aislamiento del Sandbox para el manejo de archivos.
+
+Al no contar con un equipo con macOS, el principal reto técnico fue adaptar nuestro flujo de trabajo para colaborar a distancia y coordinar las pruebas finales en el entorno virtualizado con Docker. Esta experiencia me dejó un aprendizaje muy claro sobre cómo estructurar proyectos multiplataforma y cómo sortear las limitantes de hardware mediante integración continua y virtualización.
 
 ---
 
