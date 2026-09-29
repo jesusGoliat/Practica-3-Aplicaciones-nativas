@@ -91,5 +91,4 @@ xcrun simctl addmedia booted muestras/*.png
 **Micrófono en la VM:** el simulador usa el micrófono del Mac. En macOS
 virtualizado con Docker puede no haber entrada de audio: la grabación
 funciona, pero queda en silencio. Para demostrar el reproductor se importa
-`muestras/tono-440hz.wav` desde Galería › Importar › Archivos. Esta
-limitación está documentada en el informe.
+`muestras/tono-440hz.wav` desde Galería › Importar › Archivos.

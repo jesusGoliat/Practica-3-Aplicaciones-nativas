@@ -1,7 +1,14 @@
-# Instructivo para ejecutar la práctica en macOS (Integrante 2)
+# Instructivo para ejecutar la práctica en macOS (Integrante 2: David Alexis)
 
 Este documento es para quien virtualiza macOS. El código ya está escrito, y la
-parte Android está compilada y probada en Linux. Tu trabajo es:
+parte Android está compilada y probada en Linux.
+
+> ✅ **Estado al 28 sep 2026:** los **5 ejercicios ya compilan para iOS** con
+> **Xcode 15.2** en un Mac de GitHub Actions (la misma versión que vas a
+> instalar). Si algo falla en tu VM, casi seguro es del entorno (instalación,
+> rutas, memoria), no del código.
+
+Tu trabajo es:
 **instalar el entorno → compilar → ejecutar en el simulador → tomar capturas →
 subir tus commits**.
 
@@ -31,25 +38,111 @@ la compilación y las capturas.
 
 ## 1. Requisitos de la PC anfitriona
 
-| Requisito | Mínimo (README del repositorio) | Cómo comprobarlo |
+| Requisito | Mínimo (README del repositorio) | PC de Alexis |
 |---|---|---|
-| RAM | 16 GB | `free -h` |
-| Disco libre | 50 GB con Xcode; **se recomiendan 120 GB** | `df -h ~` |
-| Virtualización | KVM activo | `kvm-ok` → «KVM acceleration can be used» |
-| Docker | Instalado | `docker run hello-world` |
+| RAM | 16 GB | 16 GB ✅ (justo; ver `.wslconfig` en el paso 2A) |
+| Disco libre | 50 GB con Xcode; **se recomiendan 120 GB** | 1.17 TB ✅ |
+| Virtualización | VT-x activo + KVM dentro de WSL | Habilitada ✅ (i5-10600KF) |
+| Docker | Docker Desktop (Windows) o Docker Engine (Linux) | Por instalar |
 
-✅ **Resultado esperado:** `kvm-ok` responde `INFO: /dev/kvm exists` y
-`KVM acceleration can be used`.
-
-📸 `ej1-entorno/img/01-specs-pc-elegida.png`: terminal con `lscpu`,
-`free -h`, `df -h` y `kvm-ok`.
+📸 `ej1-entorno/img/01-specs-pc-elegida.png`:
+- **Windows:** Administrador de tareas › Rendimiento (CPU con «Virtualización:
+  Habilitado», y la memoria) junto con la terminal de Ubuntu mostrando `kvm-ok`.
+- **Linux:** terminal con `lscpu`, `free -h`, `df -h` y `kvm-ok`.
 
 ---
 
 ## 2. Instalar macOS con MacOS-Docker
 
-Sigue el README de <https://github.com/gabrielhuav/MacOS-Docker> (tiene la
-versión para Linux y para Windows con WSL). Resumen para **Linux**:
+Se basa en el README de <https://github.com/gabrielhuav/MacOS-Docker>. La
+PC de Alexis tiene **Windows 11**, así que sigue el **2A**. El **2B** es para
+Linux.
+
+### 2A. Windows 11 (Docker Desktop + WSL2)
+
+**1. Instalar WSL2 con Ubuntu.** En PowerShell **como administrador**:
+```powershell
+wsl --install -d Ubuntu
+```
+Reinicia la PC cuando lo pida. Al abrir «Ubuntu» por primera vez, crea usuario
+y contraseña.
+
+✅ `wsl -l -v` en PowerShell muestra `Ubuntu  Running  2` (el **2** es WSL2).
+
+**2. Dar recursos a WSL y activar la virtualización anidada.** WSL usa por
+defecto solo la mitad de la RAM (8 GB), y macOS no alcanzaría. En PowerShell:
+```powershell
+notepad "$env:USERPROFILE\.wslconfig"
+```
+Pega esto, guarda y cierra:
+```ini
+[wsl2]
+nestedVirtualization=true
+memory=13GB
+processors=10
+swap=8GB
+```
+Aplica los cambios con:
+```powershell
+wsl --shutdown
+```
+
+**3. Instalar Docker Desktop.** Descárgalo de
+<https://www.docker.com/products/docker-desktop/> y deja marcado «Use WSL 2».
+Luego, en **Settings › Resources › WSL Integration**, activa **«Enable
+integration with my default WSL distro»** y el interruptor de **Ubuntu**, y
+pulsa **Apply & restart**.
+
+✅ En la terminal de Ubuntu, `docker run hello-world` imprime «Hello from Docker!».
+
+**4. Verificar KVM dentro de Ubuntu (WSL):**
+```bash
+sudo apt update && sudo apt -y install cpu-checker
+kvm-ok
+```
+✅ Debe responder `INFO: /dev/kvm exists` y `KVM acceleration can be used`.
+Si no:
+```bash
+sudo apt -y install bridge-utils cpu-checker libvirt-clients libvirt-daemon qemu-system-x86 qemu-kvm
+```
+Si aun así falla, revisa que la virtualización (Intel VT-x) esté activa en la
+BIOS.
+
+**5. Soporte de ventanas** (Windows 11 trae WSLg, así que la ventana de QEMU se
+ve en el escritorio de Windows):
+```bash
+sudo apt install -y x11-apps
+xeyes      # debe abrir una ventanita con ojos; ciérrala
+```
+
+**6. Crear el contenedor de macOS** (en la terminal de **Ubuntu**):
+```bash
+docker run -it --name macos-p3 \
+    --device /dev/kvm \
+    -p 50922:10022 \
+    -e "DISPLAY=${DISPLAY:-:0.0}" \
+    -v /mnt/wslg/.X11-unix:/tmp/.X11-unix \
+    -e GENERATE_UNIQUE=true \
+    -e MASTER_PLIST_URL='https://raw.githubusercontent.com/sickcodes/osx-serial-generator/master/config-custom.plist' \
+    -e SHORTNAME=ventura \
+    -e RAM=9 \
+    -e SMP=8 \
+    -e CORES=4 \
+    sickcodes/docker-osx:latest
+```
+- La primera vez descarga la imagen, que pesa varios GB.
+- Si la ventana no aparece, repite el comando cambiando
+  `DISPLAY=${DISPLAY:-:0.0}` por `DISPLAY=${DISPLAY:-:0}` (la segunda variante
+  del README). Antes borra el contenedor fallido con `docker rm macos-p3`,
+  **solo mientras macOS aún no esté instalado**.
+- **Recursos:** `RAM=9` GB para macOS deja unos 4 GB a WSL y Docker dentro de
+  los 13 GB. `SMP=8` y `CORES=4` son los valores del README.
+
+**Para volver a entrar otro día:** abre Docker Desktop y, en Ubuntu, corre
+`docker start -ai macos-p3`. **No** vuelvas a usar `docker run`, porque crearía
+un disco nuevo vacío.
+
+### 2B. Linux
 
 ```bash
 git clone https://github.com/gabrielhuav/MacOS-Docker.git
@@ -76,7 +169,7 @@ ejemplo, con 16 GB y 8 hilos usa `RAM=10`, `SMP=6`, `CORES=6`; con 32 GB usa
 `RAM=16`. La opción `--name macos-p3` sirve para volver a arrancar el mismo
 disco después con `docker start -ai macos-p3`.
 
-Luego, dentro de la VM:
+### 2C. Instalar macOS dentro de la ventana de QEMU (igual en Windows y Linux)
 1. **macOS Base System** → **Utilidad de Discos** → borrar el disco **QEMU
    (~270 GB)** con el nombre `MacOS`, formato **APFS** y esquema **GUID**.
 2. **Reinstalar macOS Ventura** en el disco `MacOS`. Tarda alrededor de 1 h.
@@ -132,7 +225,7 @@ menos un iPhone 15 y un iPad.
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile && eval "$(/usr/local/bin/brew shellenv)"
 
-brew install xcodegen cocoapods git
+brew install xcodegen cocoapods git gh
 brew install --cask temurin@17        # JDK 17 para el Ej. 5
 
 # Flutter 3.24.0 (versión exacta)
@@ -160,15 +253,21 @@ se compila en Linux.
 
 ---
 
-## 5. Traer el repositorio
+## 5. Traer el repositorio (dentro de macOS)
 
+Las capturas se toman dentro de macOS, así que clonas y subes desde ahí. En la
+Terminal de macOS:
 ```bash
+brew install gh
+gh auth login          # GitHub.com → HTTPS → Login with a web browser (cuenta Alexis177)
 cd ~
 git clone https://github.com/jesusGoliat/Practica-3-Aplicaciones-nativas.git Practica3
 cd Practica3
-git config user.name  "«Tu nombre»"
-git config user.email "«tu correo de GitHub»"
+git config --global user.name  "David Alexis Hernandez Gonzalez"
+git config --global user.email "hernandezgonzalezdavidalexis@gmail.com"
 ```
+✅ `git log --oneline | head -3` muestra commits recientes (entre ellos
+`fix(ej5): import de UIKit faltante…`).
 
 > Clónalo en una ruta **sin espacios ni acentos** (`~/Practica3`). No lo
 > pases por USB ni por WhatsApp.
@@ -399,6 +498,10 @@ git log -1 --format='%an <%ae>%n%B'   # autor = tú; sin líneas Co-Authored-By
 
 | Síntoma | Causa | Solución |
 |---|---|---|
+| (Windows) `docker: Cannot connect to the Docker daemon` en Ubuntu | Docker Desktop cerrado o sin integración WSL | Abre Docker Desktop; Settings › Resources › WSL Integration › Ubuntu activado |
+| (Windows) `kvm-ok`: «/dev/kvm does not exist» | Falta la virtualización anidada o VT-x | Revisa `nestedVirtualization=true` en `.wslconfig`, luego `wsl --shutdown`; activa VT-x en la BIOS; `wsl --update` |
+| (Windows) No aparece la ventana de QEMU | DISPLAY o WSLg | Prueba `xeyes`; usa la variante `DISPLAY=${DISPLAY:-:0}`; `wsl --update` |
+| (Windows) macOS muy lento o el contenedor se cierra solo | WSL con poca memoria | `.wslconfig` con `memory=13GB` y `swap=8GB`; cierra Chrome y juegos mientras trabajas |
 | El simulador tarda minutos o se queda en negro | Sin aceleración de GPU en QEMU | Usa **un solo** simulador (iPhone SE o iPhone 15, no Pro Max); cierra el canvas de Previews (⌥⌘↩); `defaults write com.apple.iphonesimulator GraphicsQualityOverride 10`; sube `RAM`/`CORES` del contenedor |
 | La App Store dice que Xcode requiere macOS 14 | Ventura solo admite hasta Xcode 15.2 | Descarga el `.xip` de 15.2 en developer.apple.com/download/all |
 | «iOS 17.2 Platform Not Installed» | Falta el runtime | Xcode › Settings › Platforms › iOS 17.2, o `xcodebuild -downloadPlatform iOS` |
@@ -420,5 +523,6 @@ git log -1 --format='%an <%ae>%n%B'   # autor = tú; sin líneas Co-Authored-By
 
 **Plan B:** si la VM no arranca, avisa **ese mismo día** al profesor y
 coordínate con otro equipo (lo pide la práctica). Los binarios de simulador
-del CI de GitHub (`.github/workflows/ios-build.yml`, pestaña Actions) sirven
-como respaldo para instalar con `xcrun simctl install`.
+del CI de GitHub (vienen en `respaldo/apps-compiladas-en-github/` del
+zip de Alexis) sirven como respaldo para instalar con `xcrun simctl install`.
+Son universales (x86_64 + arm64), así que corren en el simulador de la VM.
