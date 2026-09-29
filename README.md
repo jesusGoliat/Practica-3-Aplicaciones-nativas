@@ -2,8 +2,6 @@
 
 ---
 
-## Portada
-
 - **Institución:** Instituto Politécnico Nacional — Escuela Superior de Cómputo
 - **Asignatura:** Desarrollo de aplicaciones móviles nativas
 - **Profesor:** Gabriel Hurtado Avilés
