@@ -356,29 +356,7 @@ usar es el 15.2, así que la versión del sistema terminó decidiendo la versió
 de Xcode, de Swift y hasta la de Kotlin que podíamos usar. Mi laptop (7.6 GB
 de RAM) no alcanzaba ni el mínimo para virtualizar macOS. Por eso me enfoqué
 en preparar y validar todo desde Linux: la parte Android de los Ejercicios 4
-y 5, las pruebas automáticas y una compilación en un Mac de GitHub Actions. Así
-detectamos antes de ejecutar en macOS el único error de compilación de
-iOS: faltaba un `import` de UIKit en el código de Kotlin/Native.
-
-Lo que más me sorprendió fue la diferencia entre «compila» y «funciona». Las
-pruebas automáticas pasaban, pero al probar Flutter en mi celular encontré que
-al girar una foto en el editor la vista previa se salía de la pantalla. Lo
-corregimos antes de tomar las capturas, y entendí por qué la práctica insiste
-en probar en dispositivos reales. También me sorprendió la diferencia de
-tamaño entre enfoques: el APK de Flutter pesa 56 MB (incluye su motor) y el de
-Kotlin Multiplatform, 1.6 MB.
-
-Mi conclusión sobre Flutter contra KMP es que no hay uno mejor en general.
-Flutter me resultó más cómodo para la app de cámara y micrófono, porque los
-plugins resuelven el acceso al hardware. Pero también me enseñó que depender
-de plugins tiene un costo: tuve que fijar versiones de `record` que eran
-incompatibles con Flutter 3.24. KMP me pareció más natural para el gestor de
-archivos, porque con `expect`/`actual` se llama directo a las APIs de cada
-sistema. A cambio, hay que entender Gradle, la interoperabilidad con
-Objective-C y un proyecto Xcode aparte. Por último, organizar el trabajo de
-cuatro personas cuando solo una computadora puede ejecutar macOS me enseñó
-que planear el reparto y los commits desde el principio es tan importante como
-el código.
+y 5, las pruebas automáticas y una compilación en un Mac de GitHub Actions. 
 
 ### David Alexis Hernandez Gonzalez
 En esta práctica logramos comprender el proceso de desarrollo y ejecución de
@@ -398,14 +376,6 @@ es una limitante que en Android simplemente no existe. Entendí por qué el
 equipo tuvo que montar macOS-Docker en la máquina de Alexis en vez de que cada
 quien probara su parte por su lado.
 
-Trabajar "a ciegas" —escribiendo el gestor de archivos y la cámara sin poder
-correrlos yo mismo, y viendo hasta después si compilaban en GitHub Actions y en
-la VM— me obligó a ser mucho más cuidadoso leyendo la documentación de
-FileManager, UTType y AVFoundation, y a apoyarme en el equipo para confirmar
-que las cosas realmente funcionaran. Me sorprendió lo similar que es SwiftUI a
-Jetpack Compose en la forma de pensar la interfaz de forma declarativa, aunque
-el manejo de permisos, los security-scoped bookmarks y el sandboxing de iOS
-son bastante más estrictos que lo que había visto en Android.
 
 ### Luis Angel Agustin Fuentes
 Antes de esta práctica, mi experiencia estaba enfocada casi por completo en Android y desarrollo Web, por lo que el ecosistema Apple era un terreno prácticamente nuevo para mí. Enfrentarme a él me hizo entender de primera mano la complejidad de sus restricciones, donde me sorprendió especialmente la rigidez de su sistema de seguridad y el aislamiento del Sandbox para el manejo de archivos.
@@ -418,15 +388,9 @@ Al no contar con un equipo con macOS, el principal reto técnico fue adaptar nue
 
 - Apple Inc. (s.f.). *AVFoundation*. https://developer.apple.com/documentation/avfoundation
 - Apple Inc. (s.f.). *Core Data*. https://developer.apple.com/documentation/coredata
-- Apple Inc. (s.f.). *FileManager*. https://developer.apple.com/documentation/foundation/filemanager
-- Apple Inc. (s.f.). *Human Interface Guidelines*. https://developer.apple.com/design/human-interface-guidelines
-- Apple Inc. (s.f.). *QLPreviewController*. https://developer.apple.com/documentation/quicklook/qlpreviewcontroller
 - Apple Inc. (s.f.). *Providing access to directories (security-scoped bookmarks)*. https://developer.apple.com/documentation/uikit/view_controllers/providing_access_to_directories
 - Flutter. (s.f.). *Guide to app architecture*. https://docs.flutter.dev/app-architecture
 - Google. (s.f.). *Material Design 3*. https://m3.material.io
 - Hurtado Avilés, G. (s.f.). *MacOS-Docker* [Repositorio]. GitHub. https://github.com/gabrielhuav/MacOS-Docker
-- JetBrains. (s.f.). *Compose Multiplatform*. https://www.jetbrains.com/compose-multiplatform/
-- JetBrains. (s.f.). *Expected and actual declarations*. https://kotlinlang.org/docs/multiplatform/multiplatform-expect-actual.html
-- Cash App. (s.f.). *SQLDelight*. https://sqldelight.github.io/sqldelight/
 - sickcodes. (s.f.). *Docker-OSX* [Repositorio]. GitHub. https://github.com/sickcodes/Docker-OSX
 - Yonas Kolb. (s.f.). *XcodeGen* [Repositorio]. GitHub. https://github.com/yonaskolb/XcodeGen
