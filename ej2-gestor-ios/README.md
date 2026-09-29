@@ -75,5 +75,3 @@ cd ej2-gestor-ios
 xcodegen generate
 open GestorArchivos.xcodeproj      # esquema GestorArchivos → iPhone 15 → ⌘R
 ```
-Para el paso a paso, los resultados esperados y las capturas, ver
-`INSTRUCTIVO_MACOS.md`.

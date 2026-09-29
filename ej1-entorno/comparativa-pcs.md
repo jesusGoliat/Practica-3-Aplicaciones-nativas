@@ -1,15 +1,7 @@
 # Ejercicio 1.1 — Comparativa de las computadoras del equipo
 
-> Cada integrante llena **su propia fila** y la sube en su commit
-> (ver `REPARTO_COMMITS.md`). Cómo obtener los datos:
->
-> | Sistema | RAM / CPU | GPU | Disco libre | Virtualización |
-> |---|---|---|---|---|
-> | Linux | `free -h`, `lscpu` | `lspci \| grep -i vga` | `df -h ~` | `egrep -c '(vmx\|svm)' /proc/cpuinfo` (>0) y `ls /dev/kvm` |
-> | Windows | Administrador de tareas › Rendimiento | ídem | Explorador | Administrador de tareas › CPU › «Virtualización: Habilitado» |
->
-> Requisitos del repositorio MacOS-Docker: **16 GB de RAM**, **50 GB libres**
-> con Xcode (recomendado ≥ 100 GB) y CPU con virtualización (KVM).
+Requisitos del repositorio MacOS-Docker: **16 GB de RAM**, **50 GB libres**
+con Xcode (recomendado ≥ 100 GB) y CPU con virtualización (KVM).
 
 | Integrante | Boleta | SO | CPU (núcleos/hilos) | RAM | GPU | Disco libre | Virtualización | ¿Tiene Mac? |
 |---|---|---|---|---|---|---|---|---|

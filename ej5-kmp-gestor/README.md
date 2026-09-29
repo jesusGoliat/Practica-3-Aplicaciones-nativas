@@ -118,7 +118,6 @@ Android, *security-scoped URL* en iOS). Ese mecanismo está implementado con
 ```
 
 ### iOS (macOS)
-Ver `INSTRUCTIVO_MACOS.md`, paso 9. Resumen:
 ```bash
 cd iosApp && xcodegen generate && open iosApp.xcodeproj   # ⌘R en «iPhone 15»
 ```

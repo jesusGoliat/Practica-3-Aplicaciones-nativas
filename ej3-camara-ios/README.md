@@ -22,8 +22,7 @@ en una galería con álbumes. Los metadatos se guardan en Core Data. Funciona
    pasa por la misma pantalla de revisión, con filtros y guardado en Core
    Data.
 
-La fototeca del simulador se llena con `xcrun simctl addmedia booted muestras/*.png`
-(ver el instructivo).
+La fototeca del simulador se llena con `xcrun simctl addmedia booted muestras/*.png`.
 
 ## Estructura
 

@@ -93,7 +93,6 @@ flutter build apk --release      # → build/app/outputs/flutter-apk/app-release
 ```
 
 ### iOS (solo en macOS)
-Ver `INSTRUCTIVO_MACOS.md`, paso 8. Resumen:
 ```bash
 flutter pub get
 cd ios && pod install && cd ..

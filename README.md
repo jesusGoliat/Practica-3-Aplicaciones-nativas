@@ -24,8 +24,6 @@
 ```text
 Practica3/
 ├── README.md                  Este informe
-├── INSTRUCTIVO_MACOS.md       Paso a paso para compilar y ejecutar en macOS (Xcode + simulador)
-├── REPARTO_COMMITS.md         División de tareas y commits entre los 4 integrantes
 ├── .github/workflows/         Compilación iOS automática en un runner macOS (GitHub Actions)
 ├── ej1-entorno/               Ej. 1: comparativa de PCs y proyecto de prueba HolaMundo
 ├── ej2-gestor-ios/            Ej. 2: Gestor de Archivos (Swift + SwiftUI)
@@ -101,13 +99,7 @@ adecuada para virtualizar macOS con QEMU/KVM. La PC de Jesús (i5-6200U,
 7.6 GB de RAM, 32 GB libres) queda por debajo del mínimo. Ningún integrante
 tiene una Mac física.
 
-### 1.2 Trabajo en equipo
-El reparto de tareas y commits está en [`REPARTO_COMMITS.md`](REPARTO_COMMITS.md).
-
-### 1.3 y 1.4 Entorno utilizado
-Los pasos de instalación de macOS, Xcode y las herramientas están en
-[`INSTRUCTIVO_MACOS.md`](INSTRUCTIVO_MACOS.md). El entorno que respaldan las
-evidencias es este:
+### 1.2 Entorno utilizado
 
 | Componente | Versión |
 |---|---|
