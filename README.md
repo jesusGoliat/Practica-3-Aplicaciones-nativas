@@ -463,7 +463,24 @@ entorno macOS-Docker y con la comparación Flutter vs KMP.»
 «…»
 
 ### Javier de Jesus Gamez Rosas
-«…»
+Antes de esta práctica no sabía nada de desarrollo para iOS; toda mi experiencia
+previa era con Android, así que entrarle a Swift y SwiftUI fue empezar casi
+desde cero. Lo primero que me chocó fue lo cerrado que es el ecosistema Apple:
+no poder compilar ni probar nada en mi propia PC y depender por completo de una
+Mac (o de una VM con macOS) para algo tan básico como ver si el código compila
+es una limitante que en Android simplemente no existe. Entendí por qué el
+equipo tuvo que montar macOS-Docker en la máquina de Alexis en vez de que cada
+quien probara su parte por su lado.
+
+Trabajar "a ciegas" —escribiendo el gestor de archivos y la cámara sin poder
+correrlos yo mismo, y viendo hasta después si compilaban en GitHub Actions y en
+la VM— me obligó a ser mucho más cuidadoso leyendo la documentación de
+FileManager, UTType y AVFoundation, y a apoyarme en el equipo para confirmar
+que las cosas realmente funcionaran. Me sorprendió lo similar que es SwiftUI a
+Jetpack Compose en la forma de pensar la interfaz de forma declarativa, aunque
+el manejo de permisos, los security-scoped bookmarks y el sandboxing de iOS
+son bastante más estrictos que lo que había visto en Android.
+
 
 ### Luis Angel Agustin Fuentes
 «…»
