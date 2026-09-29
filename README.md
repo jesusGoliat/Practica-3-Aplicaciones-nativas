@@ -26,7 +26,6 @@ Practica3/
 ├── README.md                  Este informe
 ├── INSTRUCTIVO_MACOS.md       Paso a paso para compilar y ejecutar en macOS (Xcode + simulador)
 ├── REPARTO_COMMITS.md         División de tareas y commits entre los 4 integrantes
-├── CHECKLIST.md               Verificación final antes de entregar
 ├── .github/workflows/         Compilación iOS automática en un runner macOS (GitHub Actions)
 ├── ej1-entorno/               Ej. 1: comparativa de PCs y proyecto de prueba HolaMundo
 ├── ej2-gestor-ios/            Ej. 2: Gestor de Archivos (Swift + SwiftUI)
@@ -257,20 +256,6 @@ La versión iOS compila en GitHub Actions.
 |---|---|---|---|
 | ![](ej4-flutter-camara/img/android-01-camara.png) | ![](ej4-flutter-camara/img/android-03-grabadora.png) | ![](ej4-flutter-camara/img/android-04-galeria.png) | ![](ej4-flutter-camara/img/android-07-ajustes-azul-oscuro.png) |
 
-**iOS (simulador)**
-
-> ⚠️ **Capturas provisionales, por reemplazar.** Estas pantallas no coinciden
-> con el código del repositorio (tienen elementos que la app no implementa), así
-> que se sustituirán por las capturas originales del simulador.
-
-| Sin cámara | Revisar foto | Grabadora | Galería |
-|---|---|---|---|
-| ![](ej4-flutter-camara/img/ios-01-sin-camara.jpg) | ![](ej4-flutter-camara/img/ios-02-revisar-foto-filtros.jpg) | ![](ej4-flutter-camara/img/ios-03-grabadora.jpg) | ![](ej4-flutter-camara/img/ios-04-galeria.jpg) |
-
-| Galería (pestañas) | Reproductor | Ajustes oscuro |
-|---|---|---|
-| ![](ej4-flutter-camara/img/ios-05-galeria-pestanas.jpg) | ![](ej4-flutter-camara/img/ios-06-reproductor.jpg) | ![](ej4-flutter-camara/img/ios-07-ajustes-azul-oscuro.jpg) |
-
 ---
 
 ## Ejercicio 5: Kotlin Multiplatform (gestor de archivos)
@@ -296,16 +281,6 @@ GitHub Actions.
 | Documentos | Menú contextual | Visor de imagen | Azul ESCOM oscuro |
 |---|---|---|---|
 | ![](ej5-kmp-gestor/img/android-01-documentos.png) | ![](ej5-kmp-gestor/img/android-03-menu-contextual.png) | ![](ej5-kmp-gestor/img/android-04-visor-imagen.png) | ![](ej5-kmp-gestor/img/android-07-azul-oscuro.png) |
-
-**iOS (simulador)**
-
-> ⚠️ **Capturas provisionales, por reemplazar.** Estas pantallas no coinciden
-> con el código del repositorio (tienen elementos que la app no implementa), así
-> que se sustituirán por las capturas originales del simulador.
-
-| Documentos | Subcarpeta con migas |
-|---|---|
-| ![](ej5-kmp-gestor/img/ios-01-documentos.jpg) | ![](ej5-kmp-gestor/img/ios-02-subcarpeta-migas.jpg) |
 
 ### 5.5 Comparación entre Flutter y Kotlin Multiplatform
 
@@ -359,16 +334,9 @@ GitHub Actions.
   vuelve a medir la imagen. Se detectó en el celular **antes** de tomar la
   captura del editor y se cambió por `RotatedBox` (commit `fix(ej4)`). Las
   capturas corresponden al código corregido.
-- **Capturas que no se guardaron por privacidad:** la cámara frontal (mostraba
-  a un integrante) y la hoja de compartir (mostraba contactos personales).
-  Ambas funciones se probaron y funcionan. Para importar se usó una imagen de
-  prueba (`prueba-p3.png`) y no fotos personales.
 - **Zoom en el visor de imagen del Ej. 5:** el gesto de pellizcar no se puede
   automatizar con `adb`, así que la captura muestra la imagen a tamaño
   normal.
-- **Importar en el Ej. 5:** la captura muestra el menú «Importar archivos» y
-  no el selector del sistema, porque este mostraba fotos personales del
-  teléfono de un integrante.
 
 ---
 
@@ -421,31 +389,12 @@ que planear el reparto y los commits desde el principio es tan importante como
 el código.
 
 ### David Alexis Hernandez Gonzalez
-> ⚠️ **Borrador provisional redactado por Jesús**, a partir de las capturas de
-> Alexis. Alexis lo revisará y lo sustituirá por su propia conclusión.
-
-Antes de esta práctica veía el desarrollo para iPhone como algo lejano, porque
-todo el ecosistema de Apple gira alrededor de tener una Mac. Mi computadora
-resultó la más adecuada del equipo para el entorno macOS (i5-10600KF de
-6 núcleos, 16 GB de RAM y más de 1 TB libre), así que me tocó ser el
-responsable de ejecutar las apps de iOS. Eso me hizo entender que el
-requisito de 16 GB de RAM no es exagerado: el sistema, Xcode y el simulador
-compiten por la misma memoria.
-
-Lo que más me sorprendió fue probar la app de cámara en un simulador que no
-tiene cámara. En lugar de fallar, la app mostraba el aviso «Este dispositivo
-no tiene cámara» y ofrecía la fototeca como fuente alternativa. Con eso se
-pudieron aplicar los filtros Noir y Sepia, guardar la foto con su fecha y
-ubicación en Core Data, grabar audio viendo el medidor de nivel y cambiar entre
-los temas Guinda y Azul en modo claro y oscuro. Entendí que diseñar pensando en
-qué pasa cuando falta un recurso es tan importante como la función principal.
-
-También me di cuenta de lo estricto que es iOS con los permisos. El sistema
-pregunta explícitamente antes de usar el micrófono, y la fototeca se abre con
-acceso privado, sin darle a la app todas las fotos. Coordinar con el equipo
-cuándo estaba listo el código de cada integrante para poder compilarlo en un
-solo lugar fue la otra parte difícil, y me enseñó a organizar mejor el trabajo
-en equipo.
+En esta práctica logramos comprender el proceso de desarrollo y ejecución de
+aplicaciones nativas y multiplataforma en iOS, utilizando Swift, Flutter y
+Kotlin Multiplatform. Además, se comprobó el funcionamiento de distintas
+interfaces y recursos del dispositivo mediante el simulador de iPhone,
+reforzando el uso de herramientas como Xcode y la integración entre diferentes
+tecnologías.
 
 ### Javier de Jesus Gamez Rosas
 Antes de esta práctica no sabía nada de desarrollo para iOS; toda mi experiencia

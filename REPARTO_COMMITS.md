@@ -77,7 +77,7 @@ git clone https://github.com/jesusGoliat/Practica-3-Aplicaciones-nativas.git Pra
 | 1.10 | `ej4-flutter-camara/test` | `test(ej4): pruebas de repositorio e interfaz` |
 | 1.11 | `ej4-flutter-camara/README.md` `binarios/ej4-flutter-camara-android.apk` | `docs(ej4): documentación de plugins y APK` |
 | 1.12 | `ej4-flutter-camara/img/android-*.png` (capturas del celular) | `docs(ej4): capturas en Android` |
-| 1.13 | `README.md` `CHECKLIST.md` `REPARTO_COMMITS.md` | `docs: informe, comparativa Flutter vs KMP y checklist` |
+| 1.13 | `README.md` `REPARTO_COMMITS.md` | `docs: informe y comparativa Flutter vs KMP` |
 
 Capturas de Android (celular por USB):
 `adb exec-out screencap -p > ej4-flutter-camara/img/android-01-camara.png`
