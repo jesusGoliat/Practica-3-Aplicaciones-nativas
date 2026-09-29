@@ -386,16 +386,17 @@ La estructura, la tabla de `expect`/`actual` y las librerías están en
 | Aplicación | Dónde | Qué se probó | Resultado |
 |---|---|---|---|
 | Ej. 4 Flutter | Linux (`flutter test`) | 6 pruebas de repositorio + 4 de interfaz | ✅ 10/10 |
-| Ej. 4 Flutter | Celular Xiaomi 25062PC34G, Android 16 (APK release) | Permisos de cámara y micrófono; foto real con filtros Original, Sepia y Grises guardada en la galería; grabación real de 32 s con medidor de nivel; galería con miniaturas; álbum «Escuela» y etiquetas; editor (giro + filtro) aplicado al archivo; reproductor; temas Guinda/Azul en claro y oscuro | ✅ |
+| Ej. 4 Flutter | Celular Xiaomi 25062PC34G, Android 16 (APK release) | Permisos de cámara y micrófono; foto real con filtros Original, Sepia y Grises guardada en la galería; grabación real de 32 s con medidor de nivel; galería con miniaturas; álbum «Escuela» y etiquetas; editor (giro + filtro) aplicado al archivo; reproductor; temas Guinda/Azul en claro y oscuro; flash (auto), temporizador de 3 s con cuenta regresiva, cambio a cámara frontal y trasera; importar una imagen desde Archivos; compartir con la hoja del sistema; eliminar con confirmación | ✅ |
 | Ej. 4 Flutter | Simulador iPhone 15 (iOS 17.2) | Fototeca, grabadora, galería, temas | «✅/❌» |
 | Ej. 5 KMP | Linux (JVM) | 9 pruebas de dominio + 4 de SQLDelight | ✅ 13/13 |
-| Ej. 5 KMP | Celular Xiaomi 25062PC34G, Android 16 (APK release, R8) | Archivos de ejemplo, navegación con migas, menú contextual, visores de texto e imagen, favoritos y recientes (SQLDelight), restauración de la última carpeta, temas Guinda/Azul con el modo oscuro del sistema | ✅ |
+| Ej. 5 KMP | Celular Xiaomi 25062PC34G, Android 16 (APK release, R8) | Archivos de ejemplo, navegación con migas, menú contextual, visores de texto e imagen, favoritos y recientes (SQLDelight), restauración de la última carpeta, temas Guinda/Azul con el modo oscuro del sistema; crear carpeta, copiar y pegar, renombrar, mover, deslizar para eliminar con confirmación, importar con el selector del sistema (SAF) y compartir (FileProvider) | ✅ |
 | Ej. 5 KMP | Simulador iPhone 15 | Explorador, visores, importar, compartir, favoritos | «✅/❌» |
 | Ej. 2 y 3 | Docker `swift:5.10` (`swiftc -parse`) | Sintaxis de todos los archivos Swift | ✅ |
 | Ej. 1–5 iOS | GitHub Actions `macos-14`, Xcode 15.2 | Compilación para el simulador de los 5 proyectos + pruebas de Flutter y KMP ([ejecución](https://github.com/jesusGoliat/Practica-3-Aplicaciones-nativas/actions/runs/36495483496)) | ✅ |
 | Ej. 2 | Simulador iPhone 15 | Ver lista de capturas | «✅/❌» |
 | Ej. 3 | Simulador iPhone 15 | PHPicker, filtros, grabación, Core Data | «✅/❌» |
-| Todas | Modo avión / sin red | Funcionan sin Internet | «✅» |
+| Ej. 4 y 5 | Celular Android en **modo avión** (sin red: `Network is unreachable`) | Todas las pruebas de funciones anteriores (cámara, grabación, galería, importar, eliminar, gestor completo) se hicieron sin conexión | ✅ |
+| Ej. 1–5 | Simulador iPhone sin red | Funcionan sin Internet | «✅/❌» |
 
 ### Problemas conocidos
 - **Micrófono en la VM:** macOS virtualizado con Docker puede no tener
@@ -409,11 +410,10 @@ La estructura, la tabla de `expect`/`actual` y las librerías están en
   vuelve a medir la imagen. Se detectó en el celular **antes** de tomar la
   captura del editor y se cambió por `RotatedBox` (commit `fix(ej4)`). Las
   capturas corresponden al código corregido.
-- **No probado en el celular:** en el Ej. 4, flash, temporizador de foto,
-  cambio de cámara, importar y compartir. En el Ej. 5, renombrar, copiar,
-  mover, eliminar, completar una importación y compartir. La lógica de estas
-  operaciones está cubierta por las pruebas automáticas (repositorio y
-  dominio), pero no se ejecutó a mano.
+- **Capturas que no se guardaron por privacidad:** la cámara frontal (mostraba
+  a un integrante) y la hoja de compartir (mostraba contactos personales).
+  Ambas funciones se probaron y funcionan. Para importar se usó una imagen de
+  prueba (`prueba-p3.png`) y no fotos personales.
 - **Zoom en el visor de imagen del Ej. 5:** el gesto de pellizcar no se puede
   automatizar con `adb`, así que la captura muestra la imagen a tamaño
   normal.
